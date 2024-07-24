@@ -25,10 +25,7 @@ import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -47,7 +44,7 @@ public class InetUtils implements Closeable {
 
 	public InetUtils(final InetUtilsProperties properties) {
 		this.properties = properties;
-		this.executorService = Executors.newSingleThreadExecutor(r -> {
+		this.executorService = Executors.newCachedThreadPool(r -> {
 			Thread thread = new Thread(r);
 			thread.setName(InetUtilsProperties.PREFIX);
 			thread.setDaemon(true);
